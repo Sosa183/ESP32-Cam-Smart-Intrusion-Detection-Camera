@@ -40,11 +40,11 @@ ESP32 SecureCam is an ESP32-CAM + PIR motion sensor project that detects motion,
 #include "soc/rtc_cntl_reg.h"
 #include "esp_camera.h"
 
-const char* ssid     = "999WiFi";     
-const char* password = "albert999"; 
+const char* ssid     = "";     
+const char* password = ""; 
 
-String token   = "8206128912:AAFvBIvuQsQUh2Ah38XV6T_eL6PZUE4yBgc";
-String chat_id = "6432446216";
+String token   = "";
+String chat_id = "";
 
  
 #define PWDN_GPIO_NUM     32
