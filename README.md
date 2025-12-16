@@ -319,6 +319,8 @@ String alerts2Telegram(String token, String chat_id)
 2. Put GPIO0 to GND (flash mode)
 3. Press RST, then upload
 4. Remove GPIO0 from GND, press RST to run
+   
+![image](https://github.com/user-attachments/assets/4e9f8adc-d39c-4242-8d46-48afaa20d2ec)
 
 ## 6) Test
 - Open Serial Monitor
