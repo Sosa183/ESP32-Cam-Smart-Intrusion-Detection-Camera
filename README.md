@@ -25,6 +25,8 @@ ESP32 SecureCam is an ESP32-CAM + PIR motion sensor project that detects motion,
 2. ESP32-CAM initializes camera
 3. Device captures a JPEG frame
 4. Sends message + photo to Telegram
+   
+<img width="725" height="890" alt="1" src="https://github.com/user-attachments/assets/e2c24fb8-7a63-4d02-815a-ae28081931dd" />
 
 ## Full Code
 
