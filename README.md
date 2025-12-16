@@ -306,6 +306,7 @@ String alerts2Telegram(String token, String chat_id)
 2. Copy BOT_TOKEN
 3. Get your CHAT_ID 
 4. Put token + chat_id into the sketch
+<img width="1280" height="833" alt="4b5f1a5c-eaac-481a-8721-d41117372576" src="https://github.com/user-attachments/assets/3eee0e07-949b-48f2-a8fc-8697ba6e6885" />
 
 ## 5) Uploading
 1. Connect FTDI to ESP32-CAM (5V, GND, U0R, U0T)
