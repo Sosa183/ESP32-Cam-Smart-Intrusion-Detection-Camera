@@ -16,6 +16,8 @@ ESP32 SecureCam is an ESP32-CAM + PIR motion sensor project that detects motion,
 - PIR motion sensor 
 - FTDI / USB-to-Serial adapter
 - Jumper wires + breadboard
+  
+![IMG_1732](https://github.com/user-attachments/assets/4f6cc136-17fe-4c90-be8c-8027fd1c69db)
 
 ## Software Used
 - Arduino IDE
