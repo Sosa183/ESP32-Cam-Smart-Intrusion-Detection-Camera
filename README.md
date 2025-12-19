@@ -293,11 +293,6 @@ https://youtu.be/H8-LcESQlDU
 
 ![image](https://github.com/user-attachments/assets/8e67b85b-3ebd-4250-9876-808183dce1c0)
 
-## Resources
-- https://www.youtube.com/watch?v=LBoM_Uoq_nA
-- https://randomnerdtutorials.com/esp32-cam-pir-motion-detector-photo-capture/
-- https://github.com/LucaTomei/Esp32-Cam-PIR-Telegram?tab=readme-ov-file
-
 ## 1) Arduino IDE + ESP32 Board Package
 1. Open Arduino IDE → Preferences
 2. Add ESP32 boards URL (if needed) in “Additional Boards Manager URLs.”
@@ -365,6 +360,11 @@ Fixes:
 ![IMG_1728](https://github.com/user-attachments/assets/f0bac938-dc85-44aa-a90c-e324ea3c5bd0)
 ![IMG_1731](https://github.com/user-attachments/assets/9707fb28-08f2-4099-a123-4674ab6d7690)
 ![IMG_1732](https://github.com/user-attachments/assets/a2eef7ac-2782-452d-97cf-47b2f9b0fd6e)
+
+## Resources
+- https://www.youtube.com/watch?v=LBoM_Uoq_nA
+- https://randomnerdtutorials.com/esp32-cam-pir-motion-detector-photo-capture/
+- https://github.com/LucaTomei/Esp32-Cam-PIR-Telegram?tab=readme-ov-file
 
 
 
