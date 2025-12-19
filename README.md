@@ -8,13 +8,15 @@ ESP32 SecureCam is an ESP32-CAM + PIR motion sensor project that detects motion,
 - Captures a photo on a motion event
 - Sends Telegram alert + image
 - Cooldown delay to reduce spam
+  
+<img width="1280" height="833" alt="4b5f1a5c-eaac-481a-8721-d41117372576" src="https://github.com/user-attachments/assets/c44da964-a325-4f29-877e-bc800448a26b" />
 
 ## Hardware Used
 - ESP32-CAM 
 - PIR motion sensor 
 - FTDI / USB-to-Serial adapter
 - Jumper wires + breadboard
-- 
+
   
 ## Software Used
 - Arduino IDE
@@ -287,6 +289,9 @@ void loop() {
 
 
 ## Video Demo
+https://youtu.be/H8-LcESQlDU
+
+![image](https://github.com/user-attachments/assets/8e67b85b-3ebd-4250-9876-808183dce1c0)
 
 ## Resources
 - https://www.youtube.com/watch?v=LBoM_Uoq_nA
@@ -307,6 +312,7 @@ void loop() {
 - WiFi
 - WiFiClientSecure
 - esp_camera
+<img width="1206" height="2622" alt="IMG_1745" src="https://github.com/user-attachments/assets/134090c2-7bac-4949-9659-041769908c30" />
 
 ## 4) Telegram Bot Setup
 1. Create bot with BotFather
@@ -324,26 +330,25 @@ void loop() {
 - Open Serial Monitor
 - Trigger PIR motion
 - Confirm Telegram receives message + photo
-docs/TROUBLESHOOTING.md 
+  docs/TROUBLESHOOTING.md 
 md
-Copy code
-# Troubleshooting Notes
+
 
 ## Problem: Camera init failed 
 Fixes:
 - Confirm AI Thinker pin config is correct for your ESP32-CAM
 - Ensure stable 5V power
-- Reduce frame size / quality if memory issues occur
-- Re-seat board and check ribbon/antenna connections
+- Reduce frame size/quality if memory issues occur
+- Re-seat the board and check the ribbon/antenna connections
 
 ## Problem: Upload fails / timeout / no serial output
 Fixes:
 - GPIO0 must be connected to GND to flash
 - Use 5V (not 3.3V) on many ESP32-CAM boards
 - Swap RX/TX if needed
-- Press RST right when upload begins
+- Press RST right when the upload begins
 
-## Problem: Telegram message sends but photo fails
+## Problem: Telegram message sends, but photo fails
 Fixes:
 - Use WiFiClientSecure with proper TLS handling
 - Ensure photo buffer is valid 
@@ -355,3 +360,11 @@ Fixes:
 - Adjust PIR sensitivity + delay knobs
 - Add cooldown timer 
 - Avoid pointing at heat sources/windows
+
+![IMG_1730](https://github.com/user-attachments/assets/a712ee0b-b382-475c-832f-fe60ec951544)
+![IMG_1728](https://github.com/user-attachments/assets/f0bac938-dc85-44aa-a90c-e324ea3c5bd0)
+![IMG_1731](https://github.com/user-attachments/assets/9707fb28-08f2-4099-a123-4674ab6d7690)
+![IMG_1732](https://github.com/user-attachments/assets/a2eef7ac-2782-452d-97cf-47b2f9b0fd6e)
+
+
+
