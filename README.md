@@ -34,27 +34,27 @@ ESP32 SecureCam is an ESP32-CAM + PIR motion sensor project that detects motion,
 
 ## Full Code
 
+// src/esp32cam_pir_telegram.ino
+
 #include "esp_camera.h"
 #include <WiFi.h>
 #include <WiFiClientSecure.h>
 #include "soc/soc.h"
 #include "soc/rtc_cntl_reg.h"
 
-const char* WIFI_SSID     = "WiFi";
-const char* WIFI_PASSWORD = "999";
-String BOT_TOKEN = "8206128912:AAFvBIvuQsQUh2Ah38XV6T_4545454545";
-String CHAT_ID   = "644454545";
-// ================================================
+const char* WIFI_SSID     = "999WiFi";
+const char* WIFI_PASSWORD = "albert999";
+String BOT_TOKEN = "8206128912:AAFvBIvuQsQUh2Ah38XV6T_eL6PZUE4yBgc";
+String CHAT_ID   = "6432446216";
 
 // Wiring
-#define PIR_PIN 13                    // PIR OUT -> GPIO13 (change if needed)
-#define FLASH_LED_PIN 4               // ESP32-CAM flash LED (GPIO4)
+#define PIR_PIN 13
+#define FLASH_LED_PIN 4
 
-// ===== Anti-spam tuning =====
-const unsigned long PIR_WARMUP_MS   = 1000;  // ignore PIR for 10s after boot
-const unsigned long REARM_LOW_MS    = 2000;   // PIR must stay LOW 2s to re-arm
-const unsigned long MIN_INTERVAL_MS = 1000;  // at least 5s between alerts
-// ============================
+// Anti-spam tuning
+const unsigned long PIR_WARMUP_MS   = 1000;
+const unsigned long REARM_LOW_MS    = 2000;
+const unsigned long MIN_INTERVAL_MS = 1000;
 
 WiFiClientSecure client;
 
@@ -63,13 +63,12 @@ unsigned long lowSinceMs = 0;
 unsigned long bootMs = 0;
 unsigned long lastSentMs = 0;
 
-// ---- AI THINKER ESP32-CAM pin map ----
+// AI THINKER ESP32-CAM pin map
 #define PWDN_GPIO_NUM     32
 #define RESET_GPIO_NUM    -1
 #define XCLK_GPIO_NUM      0
 #define SIOD_GPIO_NUM     26
 #define SIOC_GPIO_NUM     27
-
 #define Y9_GPIO_NUM       35
 #define Y8_GPIO_NUM       34
 #define Y7_GPIO_NUM       39
@@ -81,7 +80,6 @@ unsigned long lastSentMs = 0;
 #define VSYNC_GPIO_NUM    25
 #define HREF_GPIO_NUM     23
 #define PCLK_GPIO_NUM     22
-// -------------------------------------
 
 String urlEncode(const String &s) {
   String out = "";
@@ -91,11 +89,9 @@ String urlEncode(const String &s) {
     if (('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z') || ('0' <= c && c <= '9') ||
         c == '-' || c == '_' || c == '.' || c == '~') {
       out += c;
-    } else if (c == ' ') {
-      out += "%20";
-    } else if (c == '\n') {
-      out += "%0A";
-    } else {
+    } else if (c == ' ') out += "%20";
+    else if (c == '\n') out += "%0A";
+    else {
       out += '%';
       out += hex[(c >> 4) & 0xF];
       out += hex[c & 0xF];
@@ -106,13 +102,10 @@ String urlEncode(const String &s) {
 
 void ensureWiFi() {
   if (WiFi.status() == WL_CONNECTED) return;
-
   WiFi.disconnect(true);
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
   unsigned long start = millis();
-  while (WiFi.status() != WL_CONNECTED && millis() - start < 12000) {
-    delay(300);
-  }
+  while (WiFi.status() != WL_CONNECTED && millis() - start < 12000) delay(300);
 }
 
 bool sendTelegramMessage(const String &text) {
@@ -153,17 +146,14 @@ bool sendPhotoToTelegram(uint8_t *imageData, size_t imageLen, const String &capt
     "--" + boundary + "\r\n"
     "Content-Disposition: form-data; name=\"chat_id\"\r\n\r\n" +
     CHAT_ID + "\r\n" +
-
     "--" + boundary + "\r\n"
     "Content-Disposition: form-data; name=\"caption\"\r\n\r\n" +
     caption + "\r\n" +
-
     "--" + boundary + "\r\n"
     "Content-Disposition: form-data; name=\"photo\"; filename=\"motion.jpg\"\r\n"
     "Content-Type: image/jpeg\r\n\r\n";
 
-  String part2 =
-    "\r\n--" + boundary + "--\r\n";
+  String part2 = "\r\n--" + boundary + "--\r\n";
 
   size_t contentLength = part1.length() + imageLen + part2.length();
 
@@ -219,9 +209,8 @@ bool initCamera() {
   config.xclk_freq_hz = 20000000;
   config.pixel_format = PIXFORMAT_JPEG;
 
-  // More reliable settings to reduce "Camera capture fail."
   if (psramFound()) {
-    config.frame_size   = FRAMESIZE_QVGA; // smaller + stable
+    config.frame_size   = FRAMESIZE_QVGA;
     config.jpeg_quality = 12;
     config.fb_count     = 1;
   } else {
@@ -234,67 +223,51 @@ bool initCamera() {
 }
 
 camera_fb_t* capturePhotoSafe(bool useFlash) {
-  if (useFlash) {
-    digitalWrite(FLASH_LED_PIN, HIGH);
-    delay(120);
-  }
+  if (useFlash) { digitalWrite(FLASH_LED_PIN, HIGH); delay(120); }
 
   camera_fb_t *fb = esp_camera_fb_get();
 
   if (useFlash) digitalWrite(FLASH_LED_PIN, LOW);
 
-  // Retry once if capture fails
   if (!fb) {
     delay(200);
-    if (useFlash) {
-      digitalWrite(FLASH_LED_PIN, HIGH);
-      delay(120);
-    }
+    if (useFlash) { digitalWrite(FLASH_LED_PIN, HIGH); delay(120); }
     fb = esp_camera_fb_get();
     if (useFlash) digitalWrite(FLASH_LED_PIN, LOW);
   }
-
   return fb;
 }
 
 void setup() {
-  WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0); // helps on ESP32-CAM
+  WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0);
 
   Serial.begin(115200);
   delay(300);
 
-  pinMode(PIR_PIN, INPUT); // if your PIR output is unstable, try INPUT_PULLDOWN
+  pinMode(PIR_PIN, INPUT);
   pinMode(FLASH_LED_PIN, OUTPUT);
   digitalWrite(FLASH_LED_PIN, LOW);
 
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
   unsigned long start = millis();
-  while (WiFi.status() != WL_CONNECTED && millis() - start < 15000) {
-    delay(300);
-  }
+  while (WiFi.status() != WL_CONNECTED && millis() - start < 15000) delay(300);
 
   client.setInsecure();
 
   if (!initCamera()) {
     Serial.println("Camera init FAILED");
-    // don't spam telegram on failure
     return;
   }
 
   bootMs = millis();
-  sendTelegramMessage("✅ ESP32-CAM online. PIR armed (warmup 30s).");
+  sendTelegramMessage("✅ ESP32-CAM online. PIR armed (warmup).");
 }
 
 void loop() {
-  // PIR warmup after boot so it doesn't spam immediately
-  if (millis() - bootMs < PIR_WARMUP_MS) {
-    delay(80);
-    return;
-  }
+  if (millis() - bootMs < PIR_WARMUP_MS) { delay(80); return; }
 
   int pir = digitalRead(PIR_PIN);
 
-  // Trigger only once per motion event AND enforce minimum time between alerts
   if (!motionLatched) {
     if (pir == HIGH && (millis() - lastSentMs > MIN_INTERVAL_MS)) {
       motionLatched = true;
@@ -302,10 +275,9 @@ void loop() {
 
       sendTelegramMessage(dramaticAlert());
 
-      // If you suspect power resets, set useFlash=false
-      bool useFlash = true;
-
+      bool useFlash = true; // set false if capture fails / resets
       camera_fb_t *fb = capturePhotoSafe(useFlash);
+
       if (!fb) {
         sendTelegramMessage("❌ Camera capture failed");
         return;
@@ -314,21 +286,8 @@ void loop() {
       sendPhotoToTelegram(fb->buf, fb->len, "🚨⚠️ MOTION DETECTED ⚠️🚨");
       esp_camera_fb_return(fb);
     }
-  } else {
-    // Re-arm only after PIR has been LOW continuously for REARM_LOW_MS
-    if (pir == LOW) {
-      if (lowSinceMs == 0) lowSinceMs = millis();
-      if (millis() - lowSinceMs > REARM_LOW_MS) {
-        motionLatched = false;
-        lowSinceMs = 0;
-      }
-    } else {
-      lowSinceMs = 0; // still high, keep latched
-    }
-  }
+  } else
 
-  delay(80);
-}
 
 ## Video Demo
 
