@@ -8,8 +8,6 @@ ESP32 SecureCam is an ESP32-CAM + PIR motion sensor project that detects motion,
 - Captures a photo on a motion event
 - Sends Telegram alert + image
 - Cooldown delay to reduce spam
-  
-![IMG_1732](https://github.com/user-attachments/assets/beec05cf-43c9-48d8-9886-12c50d0b160f)
 
 ## Hardware Used
 - ESP32-CAM 
@@ -17,7 +15,6 @@ ESP32 SecureCam is an ESP32-CAM + PIR motion sensor project that detects motion,
 - FTDI / USB-to-Serial adapter
 - Jumper wires + breadboard
 - 
-  ![IMG_1731](https://github.com/user-attachments/assets/cb0a01f0-e7d3-4869-a2a0-ec5189b1cb54)
   
 ## Software Used
 - Arduino IDE
@@ -316,7 +313,6 @@ void loop() {
 2. Copy BOT_TOKEN
 3. Get your CHAT_ID 
 4. Put token + chat_id into the sketch
-<img width="1280" height="833" alt="4b5f1a5c-eaac-481a-8721-d41117372576" src="https://github.com/user-attachments/assets/3eee0e07-949b-48f2-a8fc-8697ba6e6885" />
 
 ## 5) Uploading
 1. Connect FTDI to ESP32-CAM (5V, GND, U0R, U0T)
@@ -324,8 +320,6 @@ void loop() {
 3. Press RST, then upload
 4. Remove GPIO0 from GND, press RST to run
    
-![image](https://github.com/user-attachments/assets/4e9f8adc-d39c-4242-8d46-48afaa20d2ec)
-
 ## 6) Test
 - Open Serial Monitor
 - Trigger PIR motion
